@@ -120,6 +120,7 @@ source /opt/ros/indigo/setup.bash
 # Eclipse stuff
 alias eclimd="/home/kiki/Applications/eclipse/eclimd"
 
+
 # touchpad settings
 xinput --set-prop bcm5974 "Synaptics Off" 0 
 xinput --set-prop bcm5974 "Synaptics Noise Cancellation" 30 30
