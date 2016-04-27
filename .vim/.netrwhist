@@ -1,0 +1,6 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhist_cnt =4
+let g:netrw_dirhist_1='/home/kiki/ROS/stereo_ws/src/height_map_creator/src'
+let g:netrw_dirhist_2='/home/kiki/ROS/stereo_ws'
+let g:netrw_dirhist_3='/home/kiki/shared'
+let g:netrw_dirhist_4='/home/kiki/ROS/stereo_ws/src/height_map_creator/src'
