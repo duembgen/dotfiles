@@ -127,3 +127,5 @@ setxkbmap -option "nbsp:none"
 # ROS stuff
 source /opt/ros/indigo/setup.bash
 
+# extract file.tar.gz
+alias targz_extract='tar -xzvf'
