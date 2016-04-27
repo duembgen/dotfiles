@@ -96,4 +96,11 @@ let g:ycm_semantic_triggers = {
             \    'roslaunch' : ['="','$(','/'],
             \'rosmsg,rossrv,rosaction' : ['re!^','/'],
             \}
+" unset YouCompleteMe for latex files. DOESN't change anything!
+let g:ycm_filetype_blacklist = {
+      \'tex_flavor' : 1,
+      \}
+let g:ycm_filetype_specific_completion_to_disable = {
+      \'tex_flavor' : 1,
+      \}
 

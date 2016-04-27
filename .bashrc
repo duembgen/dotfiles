@@ -129,3 +129,6 @@ source /opt/ros/indigo/setup.bash
 
 # extract file.tar.gz
 alias targz_extract='tar -xzvf'
+
+# editor
+export EDITOR=vim
