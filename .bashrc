@@ -116,8 +116,14 @@ fi
 # touchpad settings
 xinput --set-prop bcm5974 "Synaptics Off" 0 
 xinput --set-prop bcm5974 "Synaptics Noise Cancellation" 30 30
-xinput --set-prop bcm5974 "Synaptics Finger" 5 5 20 # syntax: low high press
+xinput --set-prop bcm5974 "Synaptics Finger" 10 20 25 # syntax: low high press
+xinput --set-prop bcm5974 "Synaptics Scrolling Distance" -243 243
+xinput --set-prop bcm5974 "Synaptics Tap Action" 1 1 1 1 1 3 0
+xinput --set-prop bcm5974 "Synaptics Click Action" 1 3 0
 
 # disable non-breaking spaces
 setxkbmap -option "nbsp:none"
+
+# ROS stuff
+source /opt/ros/indigo/setup.bash
 
