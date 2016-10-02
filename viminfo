@@ -83,12 +83,12 @@ $x
 		else
 		  search --no-floppy --fs-uuid --set=root 15ec03e4-424a-4434-b1da-1cbf71e9834a
 		fi
-		echo	'Linux linux wird geladen …'
+		echo	'Linux linux wird geladen â€¦'
 		linux	/vmlinuz-linux root=UUID=6426bc86-fdb5-418b-a6df-4900db554b8b rw  quiet
-		echo	'Initiale Ramdisk wird geladen …'
+		echo	'Initiale Ramdisk wird geladen â€¦'
 		initrd	 /initramfs-linux.img
 	}
-	submenu 'Erweiterte Optionen für Arch Linux' $menuentry_id_option 'gnulinux-advanced-6426bc86-fdb5-418b-a6df-4900db554b8b' {
+	submenu 'Erweiterte Optionen fÃ¼r Arch Linux' $menuentry_id_option 'gnulinux-advanced-6426bc86-fdb5-418b-a6df-4900db554b8b' {
 		menuentry 'Arch Linux, mit Linux linux' --class arch --class gnu-linux --class gnu --class os $menuentry_id_option 'gnulinux-linux-advanced-6426bc86-fdb5-418b-a6df-4900db554b8b' {
 			load_video
 			set gfxpayload=keep
@@ -101,9 +101,9 @@ $x
 			else
 			  search --no-floppy --fs-uuid --set=root 15ec03e4-424a-4434-b1da-1cbf71e9834a
 			fi
-			echo	'Linux linux wird geladen …'
+			echo	'Linux linux wird geladen â€¦'
 			linux	/vmlinuz-linux root=UUID=6426bc86-fdb5-418b-a6df-4900db554b8b rw  quiet
-			echo	'Initiale Ramdisk wird geladen …'
+			echo	'Initiale Ramdisk wird geladen â€¦'
 			initrd	 /initramfs-linux.img
 		}
 		menuentry 'Arch Linux, with Linux linux (fallback initramfs)' --class arch --class gnu-linux --class gnu --class os $menuentry_id_option 'gnulinux-linux-fallback-6426bc86-fdb5-418b-a6df-4900db554b8b' {
@@ -118,9 +118,9 @@ $x
 			else
 			  search --no-floppy --fs-uuid --set=root 15ec03e4-424a-4434-b1da-1cbf71e9834a
 			fi
-			echo	'Linux linux wird geladen …'
+			echo	'Linux linux wird geladen â€¦'
 			linux	/vmlinuz-linux root=UUID=6426bc86-fdb5-418b-a6df-4900db554b8b rw  quiet
-			echo	'Initiale Ramdisk wird geladen …'
+			echo	'Initiale Ramdisk wird geladen â€¦'
 "1	LINE	0
 	        mat2.data[i*w+j] = 10;
 "2	LINE	0
@@ -140,9 +140,10 @@ $x
 "9	LINE	0
 	    QuadraticSpline spline_model = QuadraticSpline();
 "i	CHAR	0
-	11ii�kb1wwbbdwi1 wwwwi�kr_1
+	11ii€kb1wwbbdwi1 wwwwi€kr_1
 "u	CHAR	0
-	iqqqqqqq
+	i
+qqqqqqq
 "w	CHAR	0
 	wwwwwwwwww
 "-	CHAR	0
