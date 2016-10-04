@@ -9,6 +9,8 @@ Plugin 'Valloric/YouCompleteMe'
 Plugin 'taketwo/vim-ros'
 Plugin 'scrooloose/nerdtree'
 Plugin 'bkad/CamelCaseMotion'
+Plugin 'rhysd/vim-clang-format'
+Plugin 'scrooloose/nerdcommenter'
 
 call vundle#end() "required
 filetype plugin indent on
@@ -27,6 +29,9 @@ set comments=s1:/*,mb:\ *,elx:\ */
 
 highlight ColorColumn ctermbg=blue guibg=blue
 call matchadd('ColorColumn', '\%80v', 100)
+
+" Escape from insert mode
+inoremap jk <Esc>
 
 " Color scheme
 syntax enable
@@ -50,28 +55,23 @@ let g:Tex_MultipleCompileFormats='pdf,bib,pdf'
 let g:Tex_CompileRule_pdf='latexmk -pdf -dvi- -ps- -recorder'
 " navigate windows 
 "
-nnoremap <C-n> <C-w><C-j>
-nnoremap <C-k> <C-w><C-k>
-nnoremap <C-l> <C-w><C-l>
-nnoremap <C-h> <C-w><C-h>
+nnoremap <C-n> <C-w>j
+nnoremap <C-k> <C-w>k
+nnoremap <C-l> <C-w>l
+nnoremap <C-h> <C-w>h
 
 " add closing brackets automatically
 " inoremap { {<CR>}<Esc>kO
 
 map .. <leader>c<SPACE>
 
-" TEMPORARY
-inoremap ö é
-inoremap ä à
-inoremap ü è
-inoremap ä à
-inoremap é ö
-inoremap è ü
-
 " Allows to type :w!! if one forgot to use sudo to open file.
 " (see http://stackoverflow.com/questions/2600783/how-does-the-vim-write-with-sudo-trick-work)
  
 cmap w!! w !sudo tee > /dev/null %
+
+" replace cout and endl by std::cout and std::endl
+" cmap std!! :%s/[^\(std::\)]cout/ std::cout/gc
 
 " Always equally distribute splitted windows.
 autocmd VimResized * wincmd =
@@ -90,7 +90,6 @@ map <silent> b <Plug>CamelCaseMotion_b
 map <silent> e <Plug>CamelCaseMotion_e
 
 " YouCompleteMe Stuff
-"let g:ycm_global_ycm_extra_conf = ~/ROS/stereo_ws/src/.ycm_extra_config.py"
 let g:ycm_global_ycm_extra_conf = "/home/kiki/.vim/.ycm_extra_conf.py"
 let g:ycm_semantic_triggers = {
             \    'roslaunch' : ['="','$(','/'],
@@ -104,3 +103,11 @@ let g:ycm_filetype_specific_completion_to_disable = {
       \'tex_flavor' : 1,
       \}
 
+let g:clang_format#detect_style_file = 1
+
+
+" // comments
+let g:NERDCustomDelimiters = {'c': { 'leftAlt': '/*', 'rightAlt': '*/', 'left': '//'}}
+
+" spaces before comments
+let g:NERDSpaceDelims=1
