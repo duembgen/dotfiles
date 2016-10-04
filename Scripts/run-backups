@@ -49,14 +49,14 @@ set_full_vars() {
 
 # Variables specific to root backups
 set_bootable_vars() {
-    mount_point=/mnt/backups/bootable# where backup drive is mounted
-    backup_folder=/mnt/backups/bootable# root folder holding backups
+    mount_point=/mnt/backups/bootable # where backup drive is mounted
+    backup_folder=/mnt/backups/bootable # root folder holding backups
     to_backup=/ # folder to backup -- should start and end with a /
     excludes=/home/kiki/.full_excludes # file with stuff to exclude
-    logfile=/var/log/backups/full.log # file to send output and rsync logs to
-    errfile=/var/log/backups/full.err # file to send errors to
-    link_name="do-not-use"# name of symlink in $backup_folder pointing to latest full backups
-    folder_prefix=full- # prefix of full backup folders
+    logfile=/var/log/backups/bootable.log # file to send output and rsync logs to
+    errfile=/var/log/backups/bootable.err # file to send errors to
+    link_name="do-not-use" # name of symlink in $backup_folder pointing to latest full backups
+    folder_prefix="" # prefix of full backup folders
     delta_seconds=604800 # frequency of full backups in seconds
 }
 
@@ -122,7 +122,6 @@ main() {
     exit 0
 }
 
-
 # ------------------------------------------------------------------------------
 # ----------------------------- Mount backup drive -----------------------------
 # ------------------------------------------------------------------------------
@@ -148,8 +147,6 @@ mount_backups() {
         return 0
     fi
 }
-
-
 
 # ------------------------------------------------------------------------------
 # --------------------------- Check last backup date ---------------------------
@@ -208,11 +205,6 @@ check_date() {
     fi
 }
 
-
-
-
-
-
 # ------------------------------------------------------------------------------
 # ----------------------------- Backup using rsync -----------------------------
 # ------------------------------------------------------------------------------
@@ -225,9 +217,14 @@ make_backups() {
     echo $backup_folder/$link_name
     if [ -d $backup_folder/$link_name ] ; then 
         echo Symlink to previous backup found. Performing incremental backup.
+        echo "Source:      " $to_backup
+        echo "Destination: " $backup_folder$folder_name$to_backup
+        echo "Link:        " $backup_folder/$link_name
         rsync -a $rsyncopts --log-file=$logfile --exclude-from=$excludes --link-dest=$backup_folder/$link_name $to_backup $backup_folder$folder_name$to_backup
     else
         echo No symlink to previous backup found. Performing full backup.
+        echo "Source:      " $to_backup
+        echo "Destination: " $backup_folder$folder_name$to_backup
         rsync -a $rsyncopts --log-file=$logfile --exclude-from=$excludes $to_backup $backup_folder$folder_name$to_backup
     fi
 
