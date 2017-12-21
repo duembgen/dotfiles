@@ -1,5 +1,7 @@
 #!/bin/sh
 # Script to run another command in the background, with no output or error output to the terminal
+# To make it work, run:
+# sudo ln -s /home/kiki/dotfiles/Scripts/ds /usr/local/bin/open
 
 if test -t 1; then
 exec 1>/dev/null
