@@ -5,8 +5,7 @@ set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin() 
 " let Vundle manage Vundle, required
 Plugin 'VundleVim/Vundle.vim'
-"Plugin 'Valloric/YouCompleteMe'
-Plugin 'taketwo/vim-ros'
+Plugin 'Valloric/YouCompleteMe'
 Plugin 'scrooloose/nerdtree'
 Plugin 'bkad/CamelCaseMotion'
 Plugin 'scrooloose/nerdcommenter'
@@ -120,6 +119,7 @@ map <silent> e <Plug>CamelCaseMotion_e
 "            \    'roslaunch' : ['="','$(','/'],
 "            \'rosmsg,rossrv,rosaction' : ['re!^','/'],
 "            \}
+let g:ycm_python_binary_ath = '/usr/bin/python3'
 
 " search replace selection.
 vnoremap <C-r> "hy:%s/<C-r>h//g<left><left><left>
