@@ -137,6 +137,9 @@ let g:templates_global_name_prefix = 'template'
 " No default templates
 let g:template_no_builtin_template = 1
 
+let g:email = 'frederike.duembgen@gmail.com'
+let g:username = 'Frederike Duembgen'
+
 " ---------------------------------------------
 " -------------- ULTISNIPS SHIT ---------------
 " ---------------------------------------------
