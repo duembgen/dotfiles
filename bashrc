@@ -114,18 +114,19 @@ if ! shopt -oq posix; then
 fi
 
 # touchpad settings
-xinput --set-prop bcm5974 "Synaptics Off" 0 
-xinput --set-prop bcm5974 "Synaptics Noise Cancellation" 30 30
-xinput --set-prop bcm5974 "Synaptics Finger" 10 20 25 # syntax: low high press
-xinput --set-prop bcm5974 "Synaptics Scrolling Distance" -243 243
-xinput --set-prop bcm5974 "Synaptics Tap Action" 1 1 1 1 1 3 0
-xinput --set-prop bcm5974 "Synaptics Click Action" 1 3 0
+
+# xinput --set-prop bcm5974 "Synaptics Off" 0 
+# xinput --set-prop bcm5974 "Synaptics Noise Cancellation" 30 30
+# xinput --set-prop bcm5974 "Synaptics Finger" 10 20 25 # syntax: low high press
+# xinput --set-prop bcm5974 "Synaptics Scrolling Distance" -243 243
+# xinput --set-prop bcm5974 "Synaptics Tap Action" 1 1 1 1 1 3 0
+# xinput --set-prop bcm5974 "Synaptics Click Action" 1 3 0
 
 # disable non-breaking spaces
 setxkbmap -option "nbsp:none"
 
 # ROS stuff
-source /opt/ros/indigo/setup.bash
+# source /opt/ros/indigo/setup.bash
 
 # extract file.tar.gz
 alias targz_extract='tar -xzvf'
@@ -156,3 +157,5 @@ fi
 
 # added by Anaconda3 4.2.0 installer
 export PATH="/home/kiki/anaconda3/bin:$PATH"
+export PATH="/usr/local/cuda-9.1/bin:$PATH"
+export LD_LIBRARY_PATH="/usr/local/cuda-9.1/lib:$LD_LIBRARY_PATH"
