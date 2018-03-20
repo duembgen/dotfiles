@@ -1,0 +1,10 @@
+Additional setup commands
+
+sudp apt-get install vim tmux
+git clone https://github.com/VundleVim/Bundle.vim.git ~/.vim/bundle/Vundle.vim
+vim
+# type :PluginInstall
+
+# install youcompleteme
+cd .vim/bundle/YouCompleteMe
+./install.py --all
