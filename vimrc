@@ -7,7 +7,6 @@ call vundle#begin()
 Plugin 'VundleVim/Vundle.vim'
 Plugin 'Valloric/YouCompleteMe'
 Plugin 'scrooloose/nerdtree'
-Plugin 'bkad/CamelCaseMotion'
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'chase/vim-ansible-yaml'
 Plugin 'kchmck/vim-coffee-script'
@@ -87,13 +86,12 @@ nnoremap <C-h> <C-w>h
 " inoremap { {<CR>}<Esc>kO
 
 " change escape key
-inoremap jk <ESC>
+inoremap <F12> <ESC>
 
 map .. <leader>c<SPACE>
 
 " Allows to type :w!! if one forgot to use sudo to open file.
 " (see http://stackoverflow.com/questions/2600783/how-does-the-vim-write-with-sudo-trick-work)
- 
 cmap w!! w !sudo tee > /dev/null %
 
 " Always equally distribute splitted windows.
@@ -106,19 +104,9 @@ nmap <C-o> o<ESC>k
 set foldmethod=indent
 nnoremap <space> za
 vnoremap <space> zf
-" camel case motion
-call camelcasemotion#CreateMotionMappings('<leader>')
-map <silent> w <Plug>CamelCaseMotion_w
-map <silent> b <Plug>CamelCaseMotion_b
-map <silent> e <Plug>CamelCaseMotion_e
 
 " YouCompleteMe Stuff
-"let g:ycm_global_ycm_extra_conf = ~/ROS/stereo_ws/src/.ycm_extra_config.py"
 " let g:ycm_global_ycm_extra_conf = "/home/kiki/.vim/.ycm_extra_conf.py"
-"let g:ycm_semantic_triggers = {
-"            \    'roslaunch' : ['="','$(','/'],
-"            \'rosmsg,rossrv,rosaction' : ['re!^','/'],
-"            \}
 let g:ycm_python_binary_ath = '/usr/bin/python3'
 
 " search replace selection.
@@ -161,11 +149,11 @@ Glaive codefmt google_java_executable="java -jar /path/to/google-java-format-VER
 
 augroup autoformat_settings
   autocmd FileType bzl AutoFormatBuffer buildifier
-  autocmd FileType c,cpp,proto,javascript AutoFormatBuffer clang-format
+  autocmd FileType proto,javascript AutoFormatBuffer clang-format
   autocmd FileType dart AutoFormatBuffer dartfmt
   autocmd FileType go AutoFormatBuffer gofmt
   autocmd FileType gn AutoFormatBuffer gn
   autocmd FileType json AutoFormatBuffer js-beautify
   autocmd FileType java AutoFormatBuffer google-java-format
-  "autocmd FileType python AutoFormatBuffer yapf
+  autocmd FileType python AutoFormatBuffer yapf
 augroup END
