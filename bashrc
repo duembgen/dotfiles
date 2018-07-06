@@ -155,8 +155,6 @@ then
     xmodmap ~/.Xmodmap
 fi
 
-# added by Anaconda3 4.2.0 installer
-export PATH="/home/kiki/anaconda3/bin:$PATH"
 export LPATH=/usr/lib/nvidia-current:$LPATH
 export LIBRARY_PATH=/usr/lib/nvidia-current:$LIBRARY_PATH
 export PATH=/usr/local/cuda-8.0/bin${PATH:+:${PATH}}
@@ -170,3 +168,5 @@ alias find_file="find ./ -type f -name "
 # For making OpenGL work
 export Eigen_INCLUDE_DIR=/home/kiki/Libs/Eigen
 export LD_LIBRARY_PATH=/usr/lib/x86_64-linux-gnu:$LD_LIBRARY_PATH
+
+export PATH=/home/kiki/miniconda3/bin${PATH:+:${PATH}}
