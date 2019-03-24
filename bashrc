@@ -43,7 +43,7 @@ esac
 # uncomment for a colored prompt, if the terminal has the capability; turned
 # off by default to not distract the user: the focus in a terminal window
 # should be on the output of commands, not on the prompt
-#force_color_prompt=yes
+force_color_prompt=yes
 
 if [ -n "$force_color_prompt" ]; then
     if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then
@@ -163,10 +163,24 @@ export LD_LIBRARY_PATH=/usr/local/cuda-8.0/lib64${LD_LIBRARY_PATH:+:${LD_LIBRARY
 # add --si to show files in kB/MB/GB (1000 increments) rather than default kiB, MiB, GiB (1024 increments)
 alias show_usage="du -sh * | sort -h"
 alias find_file="find ./ -type f -name "
+alias decrease_brightness="xrandr --output DP-1 --brightness 0.5"
+# fan options. 
+alias fan_off="echo level 0 | sudo tee /proc/acpi/ibm/fan"
+alias fan_on="echo level 2 | sudo tee /proc/acpi/ibm/fan"
+alias fan_auto="echo level auto | sudo tee /proc/acpi/ibm/fan"
 
 
 # For making OpenGL work
 export Eigen_INCLUDE_DIR=/home/kiki/Libs/Eigen
 export LD_LIBRARY_PATH=/usr/lib/x86_64-linux-gnu:$LD_LIBRARY_PATH
 
-export PATH=/home/kiki/miniconda3/bin${PATH:+:${PATH}}
+# export PATH=/home/kiki/miniconda3/bin${PATH:+:${PATH}}
+
+# Jekyll stuff
+export GEM_HOME=$HOME/gems
+export PATH=$HOME/gems/bin:$PATH
+
+export LD_LIBRARY_PATH=/usr/lib/python-2.7:$LD_LIBRARY_PATH
+export LD_LIBRARY_PATH=/usr/lib/python3:$LD_LIBRARY_PATH
+#export PYTHONPATH=$PYTHONPATH:/usr/local/lib/python35.zip:/usr/local/lib/python3.5:/usr/local/lib/python3.5/plat-linux:/usr/local/lib/python3.5/lib-dynload:$HOME/.local/lib/python3.5/site-packages:/usr/local/lib/python3.5/site-packages:/usr/lib/python3/dist-packages/
+
