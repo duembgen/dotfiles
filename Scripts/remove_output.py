@@ -28,14 +28,16 @@ if __name__ == '__main__':
         description = DESCRIPTION,
         epilog = "")
     parser.add_argument('filename', type=str, default='', help='name of jupyter notebook to be processed')
+    parser.add_argument('--backup', type=str, default='', help='create backup file')
     args = parser.parse_args()
 
     fname = args.filename
     base, ext = os.path.splitext(fname)
 
-    backup_ipynb = "{}_backup{}".format(base, ext)
-    copyfile(fname, backup_ipynb)
-    print("created backup", backup_ipynb)
+    if args.backup != '':
+        backup_ipynb = "{}_backup{}".format(base, ext)
+        copyfile(fname, backup_ipynb)
+        print("created backup", backup_ipynb)
 
     with io.open(fname, 'r') as f:
         nb = nbformat.read(f, nbformat.NO_CONVERT)

@@ -168,11 +168,17 @@ alias decrease_brightness="xrandr --output DP-1 --brightness 0.5"
 alias fan_off="echo level 0 | sudo tee /proc/acpi/ibm/fan"
 alias fan_on="echo level 2 | sudo tee /proc/acpi/ibm/fan"
 alias fan_auto="echo level auto | sudo tee /proc/acpi/ibm/fan"
+# wifi restart
+alias restart_wifi="sudo service network-manager restart"
 
 
 # For making OpenGL work
 export Eigen_INCLUDE_DIR=/home/kiki/Libs/Eigen
 export LD_LIBRARY_PATH=/usr/lib/x86_64-linux-gnu:$LD_LIBRARY_PATH
+
+# for virtualenvwrapper
+export WORKON_HOME=/home/kiki/virtualenvs
+source ~/.local/bin/virtualenvwrapper.sh
 
 # export PATH=/home/kiki/miniconda3/bin${PATH:+:${PATH}}
 
@@ -184,3 +190,6 @@ export LD_LIBRARY_PATH=/usr/lib/python-2.7:$LD_LIBRARY_PATH
 export LD_LIBRARY_PATH=/usr/lib/python3:$LD_LIBRARY_PATH
 #export PYTHONPATH=$PYTHONPATH:/usr/local/lib/python35.zip:/usr/local/lib/python3.5:/usr/local/lib/python3.5/plat-linux:/usr/local/lib/python3.5/lib-dynload:$HOME/.local/lib/python3.5/site-packages:/usr/local/lib/python3.5/site-packages:/usr/lib/python3/dist-packages/
 
+export LCAV_DRIVE=/home/kiki/lcav_data
+alias mount_lcav="sudo mount -t cifs //ic1files.epfl.ch/lcav $LCAV_DRIVE -o user=duembgen,domain=intranet,uid=`id -u $USER`,gid=`id -g $USER`,file_mode=0700,dir_mode=0700,rw,nobrl,noserverino,iocharset=utf8"
+alias umount_lcav="sudo umount $LCAV_DRIVE"

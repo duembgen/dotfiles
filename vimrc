@@ -11,12 +11,11 @@ Plugin 'scrooloose/nerdcommenter'
 Plugin 'chase/vim-ansible-yaml'
 Plugin 'kchmck/vim-coffee-script'
 " Plugin 'scrooloose/syntastic' " syntax highlighting
-" Plugin 'nvie/vim-flake8' " PEP 8 syntax highlighting
 " Plugin 'tmhedberg/SimpylFold' " python code folding
 Plugin 'vim-scripts/indentpython.vim' " python indentation
 Plugin 'aperezdc/vim-template' " template files
 Plugin 'SirVer/ultisnips' " Engine for inserting code snippets
-Plugin 'honza/vim-snippets' " Code snippets
+"Plugin 'honza/vim-snippets' " Code snippets
 Plugin 'tpope/vim-surround' " Surround with quotes, brackets, tags etc.
 
 " Add maktaba and codefmt to the runtimepath.
@@ -26,6 +25,7 @@ Plugin 'google/vim-codefmt'
 " Also add Glaive, which is used to configure codefmt's maktaba flags. See
 " `:help :Glaive` for usage.
 Plugin 'google/vim-glaive'
+Plugin 'vim-latex/vim-latex'
 " ...
 call vundle#end()
 
@@ -43,8 +43,9 @@ set comments=s1:/*,mb:\ *,elx:\ */
 " Fix line width
 "set colorcolumn=80
 
-highlight ColorColumn ctermbg=blue guibg=blue
-call matchadd('ColorColumn', '\%80v', 100)
+" highlight the max column width. 
+"highlight ColorColumn ctermbg=blue guibg=blue
+"call matchadd('ColorColumn', '\%80v', 100)
 
 " Color scheme
 syntax enable
@@ -75,27 +76,33 @@ let g:tex_flavor='latex'
 let g:Tex_DefaultTargetFormat='pdf'
 let g:Tex_MultipleCompileFormats='pdf,bib,pdf'
 let g:Tex_CompileRule_pdf='latexmk -pdf -dvi- -ps- -recorder'
+
 " navigate windows 
-"
 nnoremap <C-n> <C-w>j
 nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
 nnoremap <C-h> <C-w>h
 
-" add closing brackets automatically
-" inoremap { {<CR>}<Esc>kO
+" enable/disable you complete me. 
+nnoremap <C-a> :let g:ycm_auto_trigger=0<CR>               
+nnoremap <C-b> :let g:ycm_auto_trigger=1<CR>           
+
+" move cursor while in insert mode. 
+inoremap <C-h> <C-o>h
+inoremap <C-j> <C-o>j
+inoremap <C-k> <C-o>k
+inoremap <C-l> <C-o>l
+
+
 
 " change escape key
 inoremap <F12> <ESC>
+inoremap jk <ESC>
+inoremap ii <ESC>
 
+
+" comment stuff
 map .. <leader>c<SPACE>
-
-" Allows to type :w!! if one forgot to use sudo to open file.
-" (see http://stackoverflow.com/questions/2600783/how-does-the-vim-write-with-sudo-trick-work)
-cmap w!! w !sudo tee > /dev/null %
-
-" Always equally distribute splitted windows.
-autocmd VimResized * wincmd =
 
 " insert a new line without entering insert mode
 nmap <C-o> o<ESC>k
@@ -105,12 +112,20 @@ set foldmethod=indent
 nnoremap <space> za
 vnoremap <space> zf
 
-" YouCompleteMe Stuff
-" let g:ycm_global_ycm_extra_conf = "/home/kiki/.vim/.ycm_extra_conf.py"
-let g:ycm_python_binary_ath = '/usr/bin/python3'
-
 " search replace selection.
 vnoremap <C-r> "hy:%s/<C-r>h//g<left><left><left>
+
+" Allows to type :w!! if one forgot to use sudo to open file.
+" (see http://stackoverflow.com/questions/2600783/how-does-the-vim-write-with-sudo-trick-work)
+cmap w!! w !sudo tee > /dev/null %
+
+" Always equally distribute splitted windows.
+autocmd VimResized * wincmd =
+
+
+" YouCompleteMe Stuff
+let g:ycm_global_ycm_extra_conf = "/home/kiki/.vim/.ycm_extra_conf.py"
+let g:ycm_python_binary_ath = '/usr/bin/python3'
 
 " ---------------------------------------------
 " --------------- TEMPLATE SHIT ---------------
@@ -132,20 +147,24 @@ let g:username = 'Frederike Duembgen'
 " -------------- ULTISNIPS SHIT ---------------
 " ---------------------------------------------
 
-let g:UltiSnipsUsePythonVersion = 3 " vim is compiled with python3 (echo has('python3')
-let g:UltiSnipsEditSplit = 'vertical'
-let g:UltiSnipsExpandTrigger="<c-g>"
-let g:UltiSnipsListSnippets="<c-h>"
-let g:UltiSnipsSnippetDirectories = ['/home/kiki/.vim/UltiSnips', 'UltiSnips']
+"let g:UltiSnipsUsePythonVersion = 3 " vim is compiled with python3 (echo has('python3')
+"let g:UltiSnipsEditSplit = 'vertical'
+"let g:UltiSnipsExpandTrigger="<c-g>"
+"let g:UltiSnipsListSnippets="<c-h>"
+"let g:UltiSnipsSnippetDirectories = ['/home/kiki/.vim/UltiSnips', 'UltiSnips']
 
 " ---------------------------------------------
 " --------------- VIM CODEFMT -----------------
 " ---------------------------------------------
-" the glaive#Install() should go after the "call vundle#end()"
+" IMPORTANT: for yapf (python), the style is found
+" at ~/.config/yapf/style, or in the current 
+" directory at 'setup.cfg' under [yapf]. 
+"
+" the glaive#Install() should go after the 'call vundle#end()'
 call glaive#Install()
 " Optional: Enable codefmt's default mappings on the <Leader>= prefix.
-Glaive codefmt plugin[mappings]
-Glaive codefmt google_java_executable="java -jar /path/to/google-java-format-VERSION-all-deps.jar"
+"Glaive codefmt plugin[mappings]
+"Glaive codefmt google_java_executable="java -jar /path/to/google-java-format-VERSION-all-deps.jar"
 
 augroup autoformat_settings
   autocmd FileType bzl AutoFormatBuffer buildifier
@@ -153,7 +172,11 @@ augroup autoformat_settings
   autocmd FileType dart AutoFormatBuffer dartfmt
   autocmd FileType go AutoFormatBuffer gofmt
   autocmd FileType gn AutoFormatBuffer gn
-  autocmd FileType json AutoFormatBuffer js-beautify
+  "autocmd FileType json AutoFormatBuffer js-beautify
   autocmd FileType java AutoFormatBuffer google-java-format
-  autocmd FileType python AutoFormatBuffer yapf
+  "autocmd FileType python AutoFormatBuffer yapf
 augroup END
+
+let g:ycm_auto_trigger=0 " added for tex 
+let g:ycm_server_python_interpreter='/usr/bin/python2'
+let g:loaded_youcompleteme = 1
