@@ -37,7 +37,7 @@ fi
 
 # set a fancy prompt (non-color, unless we know we "want" color)
 case "$TERM" in
-    xterm-color) color_prompt=yes;;
+    xterm-color|*-256color) color_prompt=yes;;
 esac
 
 # uncomment for a colored prompt, if the terminal has the capability; turned
@@ -57,9 +57,9 @@ if [ -n "$force_color_prompt" ]; then
 fi
 
 if [ "$color_prompt" = yes ]; then
-    PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
+  PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\W\[\033[00m\]\$ '
 else
-    PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
+    PS1='${debian_chroot:+($debian_chroot)}\u@\h:\W\$ '
 fi
 unset color_prompt force_color_prompt
 
@@ -113,40 +113,43 @@ if ! shopt -oq posix; then
   fi
 fi
 
-# touchpad settings
+################ END OF STANDARD STUFF #######################
 
-# xinput --set-prop bcm5974 "Synaptics Off" 0 
-# xinput --set-prop bcm5974 "Synaptics Noise Cancellation" 30 30
-# xinput --set-prop bcm5974 "Synaptics Finger" 10 20 25 # syntax: low high press
-# xinput --set-prop bcm5974 "Synaptics Scrolling Distance" -243 243
-# xinput --set-prop bcm5974 "Synaptics Tap Action" 1 1 1 1 1 3 0
-# xinput --set-prop bcm5974 "Synaptics Click Action" 1 3 0
+export PYTHONPATH=/home/duembgen/.local/bin/
 
-# disable non-breaking spaces
-setxkbmap -option "nbsp:none"
+alias tmux='tmux -f ~/.tmux.conf'
 
-# ROS stuff
-# source /opt/ros/indigo/setup.bash
+### virtualenv stup
+export WORKON_HOME=$HOME/Virtualenvs
+export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python
+export VIRTUALENVWRAPPER_VIRTUALENV=~/.local/bin/virtualenv
+source ~/.local/bin/virtualenvwrapper.sh
+# use python3 as default for new environments.
+export VIRTUALENV_PYTHON=/usr/bin/python3
+
+# fan control
+alias fan_off="echo level 0 | sudo tee /proc/acpi/ibm/fan"
+alias fan_on="echo level 2 | sudo tee /proc/acpi/ibm/fan"
+alias fan_auto="echo level auto | sudo tee /proc/acpi/ibm/fan"
+alias tb='docker run --rm -it -e "HOST_CW_DIR=${PWD}" -e "CALLING_HOST_NAME=$(hostname)" -e "CALLING_UID"=$UID -e "CALLING_OS"=$(uname) -v ${PWD}:/tb-module -v ${HOME}/.ssh:/root/.ssh -v /var/run/docker.sock:/var/run/docker.sock bitcraze/toolbelt'
+
+alias greppy='grep -R --exclude-dir={.pytest_cache,.ipynb_checkpoints,__pycache__,.git,build}' 
+
+requirement_add(){
+  python -c "import $1; print(f'$1>={$1.__version__}')" >> requirements.txt 
+  echo "appended requirement $1 to requirements.txt. \n\n end of file:"
+  tail requirements.txt
+}
+source /opt/ros/melodic/setup.bash
+source ~/crazyswarm/ros_ws/devel/setup.bash
+alias fix_spotify="sed -i '/window/d' $HOME/snap/spotify/current/.config/spotify/prefs"
+
+export LCAV_DRIVE=/home/kiki/lcav_data
+alias mount_lcav="sudo mount -t cifs //ic1files.epfl.ch/lcav $LCAV_DRIVE -o user=duembgen,domain=intranet,uid=`id -u $USER`,gid=`id -g $USER`,file_mode=0700,dir_mode=0700,rw,nobrl,noserverino,iocharset=utf8"
+alias umount_lcav="sudo umount $LCAV_DRIVE"
 
 # extract file.tar.gz
 alias targz_extract='tar -xzvf'
-
-# editor
-export EDITOR=vim
-
-# Command to generate standalone EFI file and copy to apple bootfolder
-mkgrubcfg() {
-    echo "Backing up previous boot.efi file"
-    cp /shared/bootfiles/boot.efi /shared/bootfiles/boot.efi.old
-    echo "Generating new standalone boot.efi file"
-    sudo grub-mkconfig -o /boot/grub/grub.cfg && \
-    sudo grub-mkstandalone -o /shared/bootfiles/boot.efi -d /usr/lib/grub/x86_64-efi -O x86_64-efi --compress=xz /boot/grub/grub.cfg && \
-    echo "Mounting Ubuntu boot partition and copying boot.efi"
-    sudo mount UUID=d67706b4-1b37-3d25-ad56-a925021e081c /mnt/apple-boot && \
-    sudo cp -v /shared/bootfiles/boot.efi /mnt/apple-boot/System/Library/CoreServices/ &&
-    echo "Unmount Ubuntu boot partition"
-    sudo umount /mnt/apple-boot
-}
 
 # check if xmodmap has already been run, and if not run it
 x=$(xmodmap -pke | grep Caps_Lock | grep F13)
@@ -155,41 +158,5 @@ then
     xmodmap ~/.Xmodmap
 fi
 
-export LPATH=/usr/lib/nvidia-current:$LPATH
-export LIBRARY_PATH=/usr/lib/nvidia-current:$LIBRARY_PATH
-export PATH=/usr/local/cuda-8.0/bin${PATH:+:${PATH}}
-export LD_LIBRARY_PATH=/usr/local/cuda-8.0/lib64${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}
-
-# add --si to show files in kB/MB/GB (1000 increments) rather than default kiB, MiB, GiB (1024 increments)
-alias show_usage="du -sh * | sort -h"
-alias find_file="find ./ -type f -name "
-alias decrease_brightness="xrandr --output DP-1 --brightness 0.5"
-# fan options. 
-alias fan_off="echo level 0 | sudo tee /proc/acpi/ibm/fan"
-alias fan_on="echo level 2 | sudo tee /proc/acpi/ibm/fan"
-alias fan_auto="echo level auto | sudo tee /proc/acpi/ibm/fan"
-# wifi restart
-alias restart_wifi="sudo service network-manager restart"
-
-
-# For making OpenGL work
-export Eigen_INCLUDE_DIR=/home/kiki/Libs/Eigen
-export LD_LIBRARY_PATH=/usr/lib/x86_64-linux-gnu:$LD_LIBRARY_PATH
-
-# for virtualenvwrapper
-export WORKON_HOME=/home/kiki/virtualenvs
-source ~/.local/bin/virtualenvwrapper.sh
-
-# export PATH=/home/kiki/miniconda3/bin${PATH:+:${PATH}}
-
-# Jekyll stuff
-export GEM_HOME=$HOME/gems
-export PATH=$HOME/gems/bin:$PATH
-
-export LD_LIBRARY_PATH=/usr/lib/python-2.7:$LD_LIBRARY_PATH
-export LD_LIBRARY_PATH=/usr/lib/python3:$LD_LIBRARY_PATH
-#export PYTHONPATH=$PYTHONPATH:/usr/local/lib/python35.zip:/usr/local/lib/python3.5:/usr/local/lib/python3.5/plat-linux:/usr/local/lib/python3.5/lib-dynload:$HOME/.local/lib/python3.5/site-packages:/usr/local/lib/python3.5/site-packages:/usr/lib/python3/dist-packages/
-
-export LCAV_DRIVE=/home/kiki/lcav_data
-alias mount_lcav="sudo mount -t cifs //ic1files.epfl.ch/lcav $LCAV_DRIVE -o user=duembgen,domain=intranet,uid=`id -u $USER`,gid=`id -g $USER`,file_mode=0700,dir_mode=0700,rw,nobrl,noserverino,iocharset=utf8"
-alias umount_lcav="sudo umount $LCAV_DRIVE"
+# ROS stuff
+# source /opt/ros/indigo/setup.bash

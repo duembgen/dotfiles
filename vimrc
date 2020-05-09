@@ -5,29 +5,29 @@ set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin() 
 " let Vundle manage Vundle, required
 Plugin 'VundleVim/Vundle.vim'
-Plugin 'Valloric/YouCompleteMe'
-Plugin 'scrooloose/nerdtree'
-Plugin 'scrooloose/nerdcommenter'
-Plugin 'chase/vim-ansible-yaml'
-Plugin 'kchmck/vim-coffee-script'
-" Plugin 'scrooloose/syntastic' " syntax highlighting
-" Plugin 'tmhedberg/SimpylFold' " python code folding
-Plugin 'vim-scripts/indentpython.vim' " python indentation
+"Plugin 'scrooloose/nerdcommenter'
+"Plugin 'chase/vim-ansible-yaml'
+"Plugin 'kchmck/vim-coffee-script'
+"Plugin 'vim-scripts/indentpython.vim' " python indentation
 Plugin 'aperezdc/vim-template' " template files
-Plugin 'SirVer/ultisnips' " Engine for inserting code snippets
+"Plugin 'SirVer/ultisnips' " Engine for inserting code snippets
 "Plugin 'honza/vim-snippets' " Code snippets
-Plugin 'tpope/vim-surround' " Surround with quotes, brackets, tags etc.
-
+"Plugin 'tpope/vim-surround' " Surround with quotes, brackets, tags etc.
 " Add maktaba and codefmt to the runtimepath.
 " (The latter must be installed before it can be used.)
-Plugin 'google/vim-maktaba'
-Plugin 'google/vim-codefmt'
+" Plugin 'google/vim-maktaba'
+" Plugin 'google/vim-codefmt'
 " Also add Glaive, which is used to configure codefmt's maktaba flags. See
 " `:help :Glaive` for usage.
-Plugin 'google/vim-glaive'
+"Plugin 'google/vim-glaive'
 Plugin 'vim-latex/vim-latex'
+" Auto formatting with black
+Plugin 'psf/black'
 " ...
 call vundle#end()
+
+let g:email = 'frederike.duembgen@gmail.com'
+let g:username = 'Frederike Duembgen'
 
 filetype plugin indent on
 " Display options
@@ -78,7 +78,7 @@ let g:Tex_MultipleCompileFormats='pdf,bib,pdf'
 let g:Tex_CompileRule_pdf='latexmk -pdf -dvi- -ps- -recorder'
 
 " navigate windows 
-nnoremap <C-n> <C-w>j
+nnoremap <C-n> <C-w>j 
 nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
 nnoremap <C-h> <C-w>h
@@ -101,6 +101,8 @@ inoremap jk <ESC>
 inoremap ii <ESC>
 
 
+nnoremap <C-t> :tabn<cr>
+
 " comment stuff
 map .. <leader>c<SPACE>
 
@@ -122,61 +124,20 @@ cmap w!! w !sudo tee > /dev/null %
 " Always equally distribute splitted windows.
 autocmd VimResized * wincmd =
 
-
-" YouCompleteMe Stuff
-let g:ycm_global_ycm_extra_conf = "/home/kiki/.vim/.ycm_extra_conf.py"
-let g:ycm_python_binary_ath = '/usr/bin/python3'
-
 " ---------------------------------------------
 " --------------- TEMPLATE SHIT ---------------
 " ---------------------------------------------
 
 " Global templates directory
-let g:templates_directory = '/home/kiki/.vim/templates'
+let g:templates_directory = '~/.vim/templates'
 
 " Template filename prefix
-let g:templates_global_name_prefix = 'template'
+let g:templates_global_name_prefix = ''
 
 " No default templates
 let g:template_no_builtin_template = 1
 
-let g:email = 'frederike.duembgen@gmail.com'
-let g:username = 'Frederike Duembgen'
-
 " ---------------------------------------------
-" -------------- ULTISNIPS SHIT ---------------
+" ------------- Black Formatting --------------
 " ---------------------------------------------
-
-"let g:UltiSnipsUsePythonVersion = 3 " vim is compiled with python3 (echo has('python3')
-"let g:UltiSnipsEditSplit = 'vertical'
-"let g:UltiSnipsExpandTrigger="<c-g>"
-"let g:UltiSnipsListSnippets="<c-h>"
-"let g:UltiSnipsSnippetDirectories = ['/home/kiki/.vim/UltiSnips', 'UltiSnips']
-
-" ---------------------------------------------
-" --------------- VIM CODEFMT -----------------
-" ---------------------------------------------
-" IMPORTANT: for yapf (python), the style is found
-" at ~/.config/yapf/style, or in the current 
-" directory at 'setup.cfg' under [yapf]. 
-"
-" the glaive#Install() should go after the 'call vundle#end()'
-call glaive#Install()
-" Optional: Enable codefmt's default mappings on the <Leader>= prefix.
-"Glaive codefmt plugin[mappings]
-"Glaive codefmt google_java_executable="java -jar /path/to/google-java-format-VERSION-all-deps.jar"
-
-augroup autoformat_settings
-  autocmd FileType bzl AutoFormatBuffer buildifier
-  autocmd FileType proto,javascript AutoFormatBuffer clang-format
-  autocmd FileType dart AutoFormatBuffer dartfmt
-  autocmd FileType go AutoFormatBuffer gofmt
-  autocmd FileType gn AutoFormatBuffer gn
-  "autocmd FileType json AutoFormatBuffer js-beautify
-  autocmd FileType java AutoFormatBuffer google-java-format
-  "autocmd FileType python AutoFormatBuffer yapf
-augroup END
-
-let g:ycm_auto_trigger=0 " added for tex 
-let g:ycm_server_python_interpreter='/usr/bin/python2'
-let g:loaded_youcompleteme = 1
+autocmd BufWritePre *.py execute ':Black'
