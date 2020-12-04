@@ -1,9 +1,2 @@
 ! change copy paste shortcuts
-keycode 133 = Mode_switch Mode_switch
-keycode 134 = Mode_switch Mode_switch
-keycode 53 = x X XF86Cut X similarequal trademark
-keycode 54 = c C XF86Copy C copyright
-keycode 55 = v V XF86Paste V radical diamond
 ! map apple to f13 for tmux
-clear lock
-keysym Caps_Lock = F12 Caps_Lock

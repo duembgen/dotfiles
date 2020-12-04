@@ -5,7 +5,7 @@ set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin() 
 " let Vundle manage Vundle, required
 Plugin 'VundleVim/Vundle.vim'
-"Plugin 'scrooloose/nerdcommenter'
+Plugin 'scrooloose/nerdcommenter'
 "Plugin 'chase/vim-ansible-yaml'
 "Plugin 'kchmck/vim-coffee-script'
 "Plugin 'vim-scripts/indentpython.vim' " python indentation
@@ -24,6 +24,10 @@ Plugin 'vim-latex/vim-latex'
 " Auto formatting with black
 Plugin 'psf/black'
 " ...
+" Auto complete
+Plugin 'davidhalter/jedi-vim'
+" Vundle plugin
+Plugin 'dense-analysis/ale'
 call vundle#end()
 
 let g:email = 'frederike.duembgen@gmail.com'
@@ -140,4 +144,10 @@ let g:template_no_builtin_template = 1
 " ---------------------------------------------
 " ------------- Black Formatting --------------
 " ---------------------------------------------
-autocmd BufWritePre *.py execute ':Black'
+" autocmd BufWritePre *.py execute ':Black'
+
+
+" ---------------------------------------------
+" ----------- Make backspace work -------------
+" ---------------------------------------------
+set backspace=indent,eol,start

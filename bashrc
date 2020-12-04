@@ -140,8 +140,6 @@ requirement_add(){
   echo "appended requirement $1 to requirements.txt. \n\n end of file:"
   tail requirements.txt
 }
-source /opt/ros/melodic/setup.bash
-source ~/crazyswarm/ros_ws/devel/setup.bash
 alias fix_spotify="sed -i '/window/d' $HOME/snap/spotify/current/.config/spotify/prefs"
 
 export LCAV_DRIVE=/home/kiki/lcav_data
@@ -158,5 +156,18 @@ then
     xmodmap ~/.Xmodmap
 fi
 
+alias restart_wifi="sudo service network-manager restart"
+
 # ROS stuff
-# source /opt/ros/indigo/setup.bash
+# source /opt/ros/melodic/setup.bash
+# source ~/crazyswarm/ros_ws/devel/setup.bash
+
+# ROS2 stuff
+source /opt/ros/eloquent/setup.bash
+
+# below sources install/local_setup.bash if it exists.
+include () {
+  [[ -f "$1" ]] && source "$1"
+}
+include install/local_setup.bash
+alias tb='docker run --rm -it -e "HOST_CW_DIR=${PWD}" -e "CALLING_HOST_NAME=$(hostname)" -e "CALLING_UID"=$UID -e "CALLING_OS"=$(uname) -v ${PWD}:/tb-module -v ${HOME}/.ssh:/root/.ssh -v /var/run/docker.sock:/var/run/docker.sock bitcraze/toolbelt'
