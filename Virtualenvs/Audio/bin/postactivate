@@ -1,0 +1,23 @@
+#!/bin/bash
+# This hook is sourced after every virtualenv is activated.
+  
+include () {
+  if [[ -f "$1" ]]; then
+    echo "source $1" 
+    source "$1"
+  else
+   echo "cannot run $1 (not in a ROS folder?)"
+  fi
+}
+
+run_jupyter () {
+  if [ -z "$(pgrep jupyter)" ]; then
+    echo "open jupyter notebook"
+    open jupyter notebook
+  else
+    echo "jupyter already running" 
+  fi
+}
+
+include install/local_setup.bash
+run_jupyter 
