@@ -22,7 +22,8 @@ Plugin 'aperezdc/vim-template' " template files
 "Plugin 'google/vim-glaive'
 Plugin 'vim-latex/vim-latex'
 " Auto formatting with black
-Plugin 'psf/black'
+" Plugin 'psf/black'
+Plugin 'pseewald/vim-anyfold'
 " ...
 " Auto complete
 Plugin 'davidhalter/jedi-vim'
@@ -34,6 +35,7 @@ let g:email = 'frederike.duembgen@gmail.com'
 let g:username = 'Frederike Duembgen'
 
 filetype plugin indent on
+syntax on
 " Display options
 "set number
 set smartindent
@@ -113,11 +115,6 @@ map .. <leader>c<SPACE>
 " insert a new line without entering insert mode
 nmap <C-o> o<ESC>k
 
-" code folding
-set foldmethod=indent
-nnoremap <space> za
-vnoremap <space> zf
-
 " search replace selection.
 vnoremap <C-r> "hy:%s/<C-r>h//g<left><left><left>
 
@@ -151,3 +148,44 @@ let g:template_no_builtin_template = 1
 " ----------- Make backspace work -------------
 " ---------------------------------------------
 set backspace=indent,eol,start
+
+" disable jedi cause it takes too long with pandas
+let g:jedi#completions_enabled = 1
+
+
+" ---------------------------------------------
+" --------- Automatic spell check ------------
+" ---------------------------------------------
+" Ignore CamelCase words when spell checking
+fun! IgnoreCamelCaseSpell()
+   syn match CamelCase /\<[A-Z][a-z].\{-}\>/ contains=@NoSpell transparent
+   syn cluster Spell add=CamelCase
+endfun
+autocmd BufRead,BufNewFile * :call IgnoreCamelCaseSpell()
+syntax match texStatement '\\cref' nextgroup=texMyCommand
+syntax region texMyCommand matchgroup=Delimiter start='{' end='}' contained contains=@NoSpell
+set spelllang=en
+set spellfile=$HOME/.vim/spell/en.utf-8.add
+autocmd BufRead,BufNewFile *.tex setlocal spell
+autocmd BufRead,BufNewFile *.md setlocal spell
+" move to next word
+nnoremap nw ]s
+" add word word
+nnoremap aw zg
+" choose first suggestion
+nnoremap cw 1z= 
+" let g:tex_comment_nospell=1
+
+" ---------------------------------------------
+" ----------- Code folding ------ -------------
+" ---------------------------------------------
+autocmd Filetype *.py AnyFoldActivate
+autocmd Filetype *.c AnyFoldActivate
+autocmd Filetype *.cpp AnyFoldActivate
+set foldlevel=99
+" code folding
+set foldmethod=indent
+nnoremap <space> za
+vnoremap <space> zf
+
+let g:vimtex_syntax_nospell_commands = ['cref']

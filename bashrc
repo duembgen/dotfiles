@@ -120,10 +120,12 @@ export PYTHONPATH=/home/duembgen/.local/bin/
 alias tmux='tmux -f ~/.tmux.conf'
 
 ### virtualenv stup
+source ~/.local/bin/virtualenvwrapper_lazy.sh
 export WORKON_HOME=$HOME/Virtualenvs
 export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python
 export VIRTUALENVWRAPPER_VIRTUALENV=~/.local/bin/virtualenv
-source ~/.local/bin/virtualenvwrapper.sh
+export VIRTUALENVWRAPPER_SCRIPT=~/.local/bin/virtualenvwrapper.sh
+export PATH=~/.local/bin:$PATH
 # use python3 as default for new environments.
 export VIRTUALENV_PYTHON=/usr/bin/python3
 
@@ -159,15 +161,19 @@ fi
 alias restart_wifi="sudo service network-manager restart"
 
 # ROS stuff
-# source /opt/ros/melodic/setup.bash
-# source ~/crazyswarm/ros_ws/devel/setup.bash
-
-# ROS2 stuff
-source /opt/ros/eloquent/setup.bash
+alias use_ros1="source /opt/ros/noetic/setup.bash"
+alias use_ros2="source ~/ros2_galactic/install/local_setup.bash"
 
 # below sources install/local_setup.bash if it exists.
 include () {
   [[ -f "$1" ]] && source "$1"
 }
 include install/local_setup.bash
-alias tb='docker run --rm -it -e "HOST_CW_DIR=${PWD}" -e "CALLING_HOST_NAME=$(hostname)" -e "CALLING_UID"=$UID -e "CALLING_OS"=$(uname) -v ${PWD}:/tb-module -v ${HOME}/.ssh:/root/.ssh -v /var/run/docker.sock:/var/run/docker.sock bitcraze/toolbelt'
+
+if [ -n "$VIRTUAL_ENV" ]; then
+  . "$VIRTUAL_ENV/bin/activate"
+fi
+
+# remove .aux, log and pdf files from tab-complete when using vim
+complete -f -X '*.@(aux|log|pdf)' -o plusdirs vim
+alias fix_spotify="vim ~/snap/spotify/current/.config/spotify/prefs"
