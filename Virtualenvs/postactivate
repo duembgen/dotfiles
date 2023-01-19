@@ -1,9 +1,0 @@
-#!/bin/bash
-# This hook is sourced after every virtualenv is activated.
-
-
-if [ -z "$TMUX" ]; then
-  echo "need to run TMUX first!";
-  deactivate;
-fi
-

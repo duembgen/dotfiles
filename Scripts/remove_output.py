@@ -27,22 +27,22 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(
         description = DESCRIPTION,
         epilog = "")
-    parser.add_argument('filename', type=str, default='', help='name of jupyter notebook to be processed')
+    parser.add_argument('filenames', type=str, default=[], nargs='+', help='names of jupyter notebook to be processed')
     parser.add_argument('--backup', type=str, default='', help='create backup file')
     args = parser.parse_args()
 
-    fname = args.filename
-    base, ext = os.path.splitext(fname)
+    for fname in args.filenames:
+        base, ext = os.path.splitext(fname)
 
-    if args.backup != '':
-        backup_ipynb = "{}_backup{}".format(base, ext)
-        copyfile(fname, backup_ipynb)
-        print("created backup", backup_ipynb)
+        if args.backup != '':
+            backup_ipynb = "{}_backup{}".format(base, ext)
+            copyfile(fname, backup_ipynb)
+            print("created backup", backup_ipynb)
 
-    with io.open(fname, 'r') as f:
-        nb = nbformat.read(f, nbformat.NO_CONVERT)
+        with io.open(fname, 'r') as f:
+            nb = nbformat.read(f, nbformat.NO_CONVERT)
 
-    remove_outputs(nb)
-    with io.open(fname, 'w', encoding='utf8') as f:
-        nbformat.write(nb, f)
-    print("wrote", fname)
+        remove_outputs(nb)
+        with io.open(fname, 'w', encoding='utf8') as f:
+            nbformat.write(nb, f)
+        print("wrote", fname)

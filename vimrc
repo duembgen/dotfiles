@@ -26,7 +26,7 @@ Plugin 'vim-latex/vim-latex'
 Plugin 'pseewald/vim-anyfold'
 " ...
 " Auto complete
-Plugin 'davidhalter/jedi-vim'
+"Plugin 'davidhalter/jedi-vim'
 " Vundle plugin
 Plugin 'dense-analysis/ale'
 call vundle#end()
@@ -89,6 +89,10 @@ nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
 nnoremap <C-h> <C-w>h
 
+" navigation for wrapped lines
+nnoremap <silent> k gk
+nnoremap <silent> j gj
+
 " enable/disable you complete me. 
 nnoremap <C-a> :let g:ycm_auto_trigger=0<CR>               
 nnoremap <C-b> :let g:ycm_auto_trigger=1<CR>           
@@ -99,13 +103,9 @@ inoremap <C-j> <C-o>j
 inoremap <C-k> <C-o>k
 inoremap <C-l> <C-o>l
 
-
-
 " change escape key
 inoremap <F12> <ESC>
 inoremap jk <ESC>
-inoremap ii <ESC>
-
 
 nnoremap <C-t> :tabn<cr>
 
@@ -189,3 +189,9 @@ nnoremap <space> za
 vnoremap <space> zf
 
 let g:vimtex_syntax_nospell_commands = ['cref']
+map <Enter> o<ESC>
+map q <Nop>
+
+" Fold paragraph
+set fde=getline(v:lnum)=~'^\\s*$'&&getline(v:lnum+1)=~'\\S'?'<1':1
+set fdm=expr

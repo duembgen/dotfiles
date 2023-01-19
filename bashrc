@@ -150,19 +150,11 @@ alias umount_lcav="sudo umount $LCAV_DRIVE"
 
 # extract file.tar.gz
 alias targz_extract='tar -xzvf'
-
-# check if xmodmap has already been run, and if not run it
-x=$(xmodmap -pke | grep Caps_Lock | grep F13)
-if [[ -z "$x" ]]; 
-then 
-    xmodmap ~/.Xmodmap
-fi
-
 alias restart_wifi="sudo service network-manager restart"
 
 # ROS stuff
 alias use_ros1="source /opt/ros/noetic/setup.bash"
-alias use_ros2="source ~/ros2_galactic/install/local_setup.bash"
+alias use_ros2="source /opt/ros/galactic/setup.bash"
 
 # below sources install/local_setup.bash if it exists.
 include () {
@@ -176,4 +168,16 @@ fi
 
 # remove .aux, log and pdf files from tab-complete when using vim
 complete -f -X '*.@(aux|log|pdf)' -o plusdirs vim
-alias fix_spotify="vim ~/snap/spotify/current/.config/spotify/prefs"
+alias fix_spotfy="sed -i '/\b\(app.window.position\)\b/d' -- $HOME/snap/spotify/current/.config/spotify/prefs"
+
+alias navlab="ssh fdu@192.168.42.7"
+alias speculatrix="ssh -p 22000 fdu@192.168.42.2"
+alias shakey="ssh -p 22000 fdu@128.100.201.176"
+alias obelisk="ssh fdu@192.168.42.9"
+
+alias vim="command vim"
+#alias vimr="command vim"
+#alias vim="code"
+source /opt/ros/noetic/setup.bash
+
+alias open_matlab="export MESA_LOADER_DRIVER_OVERRIDE=i965; matlab"
