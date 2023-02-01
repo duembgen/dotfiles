@@ -1,7 +1,7 @@
 #!/usr/bin/bash
 
 sudo apt-get install vim tmux
-git clone https://github.com/VundleVim/Bundle.vim.git ~/.vim/bundle/Vundle.vim
+git clone git@github.com:VundleVim/Vundle.vim ~/.vim/bundle/Vundle.vim
 sudo ln -s ~/dotfiles/Scripts/ds /usr/local/bin/open
 sudo chmod +x ~/dotfiles/Scripts/ds
 sudo ln -s ~/dotfiles/Scripts/remove_output /usr/local/bin/remove_output

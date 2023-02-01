@@ -119,16 +119,6 @@ export PYTHONPATH=/home/duembgen/.local/bin/
 
 alias tmux='tmux -f ~/.tmux.conf'
 
-### virtualenv stup
-source ~/.local/bin/virtualenvwrapper_lazy.sh
-export WORKON_HOME=$HOME/Virtualenvs
-export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python
-export VIRTUALENVWRAPPER_VIRTUALENV=~/.local/bin/virtualenv
-export VIRTUALENVWRAPPER_SCRIPT=~/.local/bin/virtualenvwrapper.sh
-export PATH=~/.local/bin:$PATH
-# use python3 as default for new environments.
-export VIRTUALENV_PYTHON=/usr/bin/python3
-
 # fan control
 alias fan_off="echo level 0 | sudo tee /proc/acpi/ibm/fan"
 alias fan_on="echo level 2 | sudo tee /proc/acpi/ibm/fan"
@@ -178,6 +168,6 @@ alias obelisk="ssh fdu@192.168.42.9"
 alias vim="command vim"
 #alias vimr="command vim"
 #alias vim="code"
-source /opt/ros/noetic/setup.bash
+#source /opt/ros/noetic/setup.bash
 
 alias open_matlab="export MESA_LOADER_DRIVER_OVERRIDE=i965; matlab"
