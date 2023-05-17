@@ -142,10 +142,6 @@ alias umount_lcav="sudo umount $LCAV_DRIVE"
 alias targz_extract='tar -xzvf'
 alias restart_wifi="sudo service network-manager restart"
 
-# ROS stuff
-#alias use_ros1="source /opt/ros/noetic/setup.bash"
-#alias use_ros2="source /opt/ros/humble/setup.bash"
-
 # below sources install/local_setup.bash if it exists.
 include () {
   [[ -f "$1" ]] && source "$1"
@@ -161,16 +157,9 @@ alias speculatrix="ssh -p 22000 fdu@192.168.42.2"
 alias shakey="ssh -p 22000 fdu@128.100.201.176"
 alias obelisk="ssh fdu@192.168.42.9"
 
-alias vim="command vim"
-#alias vimr="command vim"
-#alias vim="code"
-#source /opt/ros/noetic/setup.bash
-
 alias open_matlab="export MESA_LOADER_DRIVER_OVERRIDE=i965; matlab"
 
-# ROS stuff
-#alias use_ros1="source /opt/ros/noetic/setup.bash"
-source /opt/ros/humble/setup.bash
+source /opt/ros/foxy/setup.bash
 
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
@@ -186,4 +175,3 @@ else
 fi
 unset __conda_setup
 # <<< conda initialize <<<
-
