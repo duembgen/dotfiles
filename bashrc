@@ -37,13 +37,13 @@ fi
 
 # set a fancy prompt (non-color, unless we know we "want" color)
 case "$TERM" in
-    xterm-color) color_prompt=yes;;
+    xterm-color|*-256color) color_prompt=yes;;
 esac
 
 # uncomment for a colored prompt, if the terminal has the capability; turned
 # off by default to not distract the user: the focus in a terminal window
 # should be on the output of commands, not on the prompt
-#force_color_prompt=yes
+force_color_prompt=yes
 
 if [ -n "$force_color_prompt" ]; then
     if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then
@@ -57,9 +57,9 @@ if [ -n "$force_color_prompt" ]; then
 fi
 
 if [ "$color_prompt" = yes ]; then
-    PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
+  PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\W\[\033[00m\]\$ '
 else
-    PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
+    PS1='${debian_chroot:+($debian_chroot)}\u@\h:\W\$ '
 fi
 unset color_prompt force_color_prompt
 
@@ -113,19 +113,85 @@ if ! shopt -oq posix; then
   fi
 fi
 
-# touchpad settings
-xinput --set-prop bcm5974 "Synaptics Off" 0 
-xinput --set-prop bcm5974 "Synaptics Noise Cancellation" 30 30
-xinput --set-prop bcm5974 "Synaptics Finger" 10 20 25 # syntax: low high press
-xinput --set-prop bcm5974 "Synaptics Scrolling Distance" -243 243
-xinput --set-prop bcm5974 "Synaptics Tap Action" 1 1 1 1 1 3 0
-xinput --set-prop bcm5974 "Synaptics Click Action" 1 3 0
+################ END OF STANDARD STUFF #######################
 
-# disable non-breaking spaces
-setxkbmap -option "nbsp:none"
+export PYTHONPATH=/home/duembgen/.local/bin/
 
-# ROS stuff
-source /opt/ros/indigo/setup.bash
+alias tmux='tmux -f ~/.tmux.conf'
+
+# fan control
+alias fan_off="echo level 0 | sudo tee /proc/acpi/ibm/fan"
+alias fan_on="echo level 2 | sudo tee /proc/acpi/ibm/fan"
+alias fan_auto="echo level auto | sudo tee /proc/acpi/ibm/fan"
+alias tb='docker run --rm -it -e "HOST_CW_DIR=${PWD}" -e "CALLING_HOST_NAME=$(hostname)" -e "CALLING_UID"=$UID -e "CALLING_OS"=$(uname) -v ${PWD}:/tb-module -v ${HOME}/.ssh:/root/.ssh -v /var/run/docker.sock:/var/run/docker.sock bitcraze/toolbelt'
+
+alias greppy='grep -R --exclude-dir={.pytest_cache,.ipynb_checkpoints,__pycache__,.git,build}' 
+
+requirement_add(){
+  python -c "
+import $1; 
+try: 
+  print(f'$1>={$1.__version__}')
+except: 
+  print(f'$1')
+" >> requirements.txt 
+  echo "appended requirement $1 to requirements.txt. \n\n end of file:"
+  tail requirements.txt
+}
+alias fix_spotify="sed -i '/window/d' $HOME/snap/spotify/current/.config/spotify/prefs"
+
+export LCAV_DRIVE=/home/kiki/lcav_data
+alias mount_lcav="sudo mount -t cifs //ic1files.epfl.ch/lcav $LCAV_DRIVE -o user=duembgen,domain=intranet,uid=`id -u $USER`,gid=`id -g $USER`,file_mode=0700,dir_mode=0700,rw,nobrl,noserverino,iocharset=utf8"
+alias umount_lcav="sudo umount $LCAV_DRIVE"
 
 # extract file.tar.gz
 alias targz_extract='tar -xzvf'
+alias restart_wifi="sudo service network-manager restart"
+
+# ROS stuff
+#alias use_ros1="source /opt/ros/noetic/setup.bash"
+#alias use_ros2="source /opt/ros/humble/setup.bash"
+# below sources install/local_setup.bash if it exists.
+#include () {
+#  [[ -f "$1" ]] && source "$1"
+#}
+#include install/local_setup.bash
+
+# remove .aux, log and pdf files from tab-complete when using vim
+complete -f -X '*.@(aux|log|pdf)' -o plusdirs vim
+alias fix_spotfy="sed -i '/\b\(app.window.position\)\b/d' -- $HOME/snap/spotify/current/.config/spotify/prefs"
+
+alias navlab="ssh fdu@192.168.42.7"
+alias speculatrix="ssh -p 22000 fdu@192.168.42.2"
+alias shakey="ssh -p 22000 fdu@128.100.201.176"
+alias obelisk="ssh fdu@192.168.42.9"
+
+alias vim="command vim"
+#alias vimr="command vim"
+#alias vim="code"
+#source /opt/ros/noetic/setup.bash
+
+alias open_matlab="export MESA_LOADER_DRIVER_OVERRIDE=i965; matlab"
+
+# ROS stuff
+#alias use_ros1="source /opt/ros/noetic/setup.bash"
+#source /opt/ros/humble/setup.bash
+
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
+__conda_setup="$('/home/asrl/mambaforge/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
+if [ $? -eq 0 ]; then
+    eval "$__conda_setup"
+else
+    if [ -f "/home/asrl/mambaforge/etc/profile.d/conda.sh" ]; then
+        . "/home/asrl/mambaforge/etc/profile.d/conda.sh"
+    else
+        export PATH="/home/asrl/mambaforge/bin:$PATH"
+    fi
+fi
+unset __conda_setup
+
+if [ -f "/home/asrl/mambaforge/etc/profile.d/mamba.sh" ]; then
+    . "/home/asrl/mambaforge/etc/profile.d/mamba.sh"
+fi
+# <<< conda initialize <<<
