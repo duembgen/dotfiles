@@ -1,25 +1,27 @@
 #!/usr/bin/bash
 
+# setup vim and tmux
 sudo apt-get install vim tmux
 git clone git@github.com:VundleVim/Vundle.vim ~/.vim/bundle/Vundle.vim
-sudo ln -s ~/dotfiles/Scripts/ds /usr/local/bin/open
-sudo chmod +x ~/dotfiles/Scripts/ds
-sudo ln -s ~/dotfiles/Scripts/remove_output /usr/local/bin/remove_output
-sudo chmod +x ~/dotfiles/Scripts/remove_output.py
 
-mv ~/.vimrc ~/vimrc-backup
-echo "Created ~/vimrc-backup"
-ln -s ~/dotfiles/vimrc ~/.vimrc
+# make useful scripts available system-wide
+for filename in "open"  "remove_output"  "convert_ln"
+do
+  sudo chmod +x ~/dotfiles/Scripts/$filename
+  sudo ln -s ~/dotfiles/Scripts/$filename /usr/local/bin/$filename
+  if [ $? -eq 0 ]; then
+    echo "Created /usr/local/bin/$filename"
+  fi
+done
 
-mv ~/.bashrc ~/bashrc-backup
-echo "Created ~/bashrc-backup"
-ln -s ~/dotfiles/bashrc ~/.bashrc
-
-mv ~/.tmux.conf ~/tmux.conf-backup
-echo "Created ~/tmux.conf-backup"
-ln -s ~/dotfiles/tmux.conf ~/.tmux.conf
-
-mv ~/.Xmodmap ~/Xmodmap-backup
-echo "Created ~/Xmodmap-backup"
-ln -s ~/dotfiles/Xmodmap ~/.Xmodmap
-
+# create symlinks for dotfiles
+for filename in "vimrc"  "bashrc"  "tmux.conf" "Xmodmap"
+do
+  if [[ -L ~/.$filename ]]; then
+    echo "$filename already a link." 
+  else
+    mv ~/.$filename ~/$filename-backup
+    echo "Created ~/$filename-backup"
+    ln -s ~/dotfiles/$filename ~/.$filename
+  fi
+done
