@@ -1,2 +1,6 @@
 #!/usr/bin/bash
-convert -verbose -density "${3-200}" -trim "$1" -quality 100 -flatten -sharpen 0x1.0 "$2"
+find . -type f -name '*.pdf' -print0 |
+  while IFS= read -r -d '' file
+    # do convert -verbose -density 800 -resize 5000 "${file}" "${file%.*}.png"
+    do convert -verbose -density 200 "${file}" "${file%.*}.png"
+  done

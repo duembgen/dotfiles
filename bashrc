@@ -119,16 +119,6 @@ export PYTHONPATH=/home/duembgen/.local/bin/
 
 alias tmux='tmux -f ~/.tmux.conf'
 
-### virtualenv stup
-source ~/.local/bin/virtualenvwrapper_lazy.sh
-export WORKON_HOME=$HOME/Virtualenvs
-export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python
-export VIRTUALENVWRAPPER_VIRTUALENV=~/.local/bin/virtualenv
-export VIRTUALENVWRAPPER_SCRIPT=~/.local/bin/virtualenvwrapper.sh
-export PATH=~/.local/bin:$PATH
-# use python3 as default for new environments.
-export VIRTUALENV_PYTHON=/usr/bin/python3
-
 # fan control
 alias fan_off="echo level 0 | sudo tee /proc/acpi/ibm/fan"
 alias fan_on="echo level 2 | sudo tee /proc/acpi/ibm/fan"
@@ -162,9 +152,9 @@ include () {
 }
 include install/local_setup.bash
 
-if [ -n "$VIRTUAL_ENV" ]; then
-  . "$VIRTUAL_ENV/bin/activate"
-fi
+#if [ -n "$VIRTUAL_ENV" ]; then
+# . "$VIRTUAL_ENV/bin/activate"  # commented out by conda initialize
+#fi
 
 # remove .aux, log and pdf files from tab-complete when using vim
 complete -f -X '*.@(aux|log|pdf)' -o plusdirs vim
@@ -178,6 +168,27 @@ alias obelisk="ssh fdu@192.168.42.9"
 alias vim="command vim"
 #alias vimr="command vim"
 #alias vim="code"
-source /opt/ros/noetic/setup.bash
+# source /opt/ros/noetic/setup.bash
 
 alias open_matlab="export MESA_LOADER_DRIVER_OVERRIDE=i965; matlab"
+
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
+__conda_setup="$('/home/frederike/mambaforge/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
+if [ $? -eq 0 ]; then
+    eval "$__conda_setup"
+else
+    export PATH="/home/frederike/mambaforge/bin:$PATH"
+fi
+unset __conda_setup
+
+if [ -f "/home/frederike/mambaforge/etc/profile.d/mamba.sh" ]; then
+    . "/home/frederike/mambaforge/etc/profile.d/mamba.sh"
+fi
+# <<< conda initialize <<<
+
+export PATH="$PATH:$HOME/Packages/mosek/10.0/tools/platform/linuxaarch64/bin"
+
+# flutter stuff
+export PATH="$PATH:$HOME/Packages/flutter/bin"
+export PATH="$PATH:$HOME/Android/Sdk/cmdline-tools/latest/bin"

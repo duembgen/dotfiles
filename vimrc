@@ -3,31 +3,12 @@ filetype off                  " required
 
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin() 
-" let Vundle manage Vundle, required
 Plugin 'VundleVim/Vundle.vim'
 Plugin 'scrooloose/nerdcommenter'
-"Plugin 'chase/vim-ansible-yaml'
-"Plugin 'kchmck/vim-coffee-script'
-"Plugin 'vim-scripts/indentpython.vim' " python indentation
 Plugin 'aperezdc/vim-template' " template files
-"Plugin 'SirVer/ultisnips' " Engine for inserting code snippets
-"Plugin 'honza/vim-snippets' " Code snippets
-"Plugin 'tpope/vim-surround' " Surround with quotes, brackets, tags etc.
-" Add maktaba and codefmt to the runtimepath.
-" (The latter must be installed before it can be used.)
-" Plugin 'google/vim-maktaba'
-" Plugin 'google/vim-codefmt'
-" Also add Glaive, which is used to configure codefmt's maktaba flags. See
-" `:help :Glaive` for usage.
-"Plugin 'google/vim-glaive'
 Plugin 'vim-latex/vim-latex'
-" Auto formatting with black
-" Plugin 'psf/black'
 Plugin 'pseewald/vim-anyfold'
-" ...
-" Auto complete
-"Plugin 'davidhalter/jedi-vim'
-" Vundle plugin
+Plugin 'tpope/vim-surround'
 Plugin 'dense-analysis/ale'
 call vundle#end()
 
