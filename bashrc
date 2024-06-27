@@ -128,7 +128,13 @@ alias tb='docker run --rm -it -e "HOST_CW_DIR=${PWD}" -e "CALLING_HOST_NAME=$(ho
 alias greppy='grep -R --exclude-dir={.pytest_cache,.ipynb_checkpoints,__pycache__,.git,build}' 
 
 requirement_add(){
-  python -c "import $1; print(f'$1>={$1.__version__}')" >> requirements.txt 
+  python -c "
+import $1; 
+try: 
+  print(f'$1>={$1.__version__}')
+except: 
+  print(f'$1')
+" >> requirements.txt 
   echo "appended requirement $1 to requirements.txt. \n\n end of file:"
   tail requirements.txt
 }
@@ -143,18 +149,13 @@ alias targz_extract='tar -xzvf'
 alias restart_wifi="sudo service network-manager restart"
 
 # ROS stuff
-alias use_ros1="source /opt/ros/noetic/setup.bash"
-alias use_ros2="source /opt/ros/galactic/setup.bash"
-
+#alias use_ros1="source /opt/ros/noetic/setup.bash"
+#alias use_ros2="source /opt/ros/humble/setup.bash"
 # below sources install/local_setup.bash if it exists.
-include () {
-  [[ -f "$1" ]] && source "$1"
-}
-include install/local_setup.bash
-
-#if [ -n "$VIRTUAL_ENV" ]; then
-# . "$VIRTUAL_ENV/bin/activate"  # commented out by conda initialize
-#fi
+#include () {
+#  [[ -f "$1" ]] && source "$1"
+#}
+#include install/local_setup.bash
 
 # remove .aux, log and pdf files from tab-complete when using vim
 complete -f -X '*.@(aux|log|pdf)' -o plusdirs vim
@@ -168,27 +169,6 @@ alias obelisk="ssh fdu@192.168.42.9"
 alias vim="command vim"
 #alias vimr="command vim"
 #alias vim="code"
-# source /opt/ros/noetic/setup.bash
+#source /opt/ros/noetic/setup.bash
 
 alias open_matlab="export MESA_LOADER_DRIVER_OVERRIDE=i965; matlab"
-
-# >>> conda initialize >>>
-# !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$('/home/frederike/mambaforge/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
-if [ $? -eq 0 ]; then
-    eval "$__conda_setup"
-else
-    export PATH="/home/frederike/mambaforge/bin:$PATH"
-fi
-unset __conda_setup
-
-if [ -f "/home/frederike/mambaforge/etc/profile.d/mamba.sh" ]; then
-    . "/home/frederike/mambaforge/etc/profile.d/mamba.sh"
-fi
-# <<< conda initialize <<<
-
-export PATH="$PATH:$HOME/Packages/mosek/10.0/tools/platform/linuxaarch64/bin"
-
-# flutter stuff
-export PATH="$PATH:$HOME/Packages/flutter/bin"
-export PATH="$PATH:$HOME/Android/Sdk/cmdline-tools/latest/bin"
