@@ -172,3 +172,4 @@ alias vim="command vim"
 #source /opt/ros/noetic/setup.bash
 
 alias open_matlab="export MESA_LOADER_DRIVER_OVERRIDE=i965; matlab"
+alias connect_de="sudo cyberghostvpn --traffic --country-code DE --connect"
