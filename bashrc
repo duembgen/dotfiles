@@ -187,3 +187,24 @@ fi
 unset __conda_setup
 # <<< conda initialize <<<
 
+# General shortcuts
+alias run_sim_staris="./tools/bazelisk run //spines:bullet_spine -- --show --extra-urdf-path assets/stairs.urdf"
+
+# Install Ruby Gems to ~/gems
+export GEM_HOME="$HOME/gems"
+export PATH="$HOME/gems/bin:$PATH"
+
+# Flutter stuff
+export PATH="/home/fdumbgen/Packages/flutter/bin:$PATH"
+export ANDROID_HOME="/home/fdumbgen/Android/"
+
+# To disable paste-on-middle-click 
+# taken from here: https://askubuntu.com/questions/4507/how-do-i-disable-middle-mouse-button-click-paste
+# sudo apt-get install xbindkeys xsel xdotool
+# create ~/.xbindkeysrc with contents:
+# "echo -n | xsel -n -i; pkill xbindkeys; xdotool click 2; xbindkeys"
+# b:2
+xbindkeys -p
+
+# Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
+export PATH="$PATH:$HOME/.rvm/bin"

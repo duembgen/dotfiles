@@ -10,6 +10,7 @@ Plugin 'vim-latex/vim-latex'
 Plugin 'pseewald/vim-anyfold'
 Plugin 'tpope/vim-surround'
 Plugin 'dense-analysis/ale'
+Plugin 'preservim/vim-markdown'
 call vundle#end()
 
 let g:email = 'frederike.duembgen@gmail.com'
